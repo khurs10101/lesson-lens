@@ -108,6 +108,7 @@ echo ""
 echo "[4/8] Setting up environment variables..."
 if [ ! -f "$APP_DIR/.env.local" ]; then
     GATE_TOKEN=$(openssl rand -hex 16)  # Generate a random 32-char token
+    GATE_PASS=$(openssl rand -base64 16)  # Generate a random password
     cat > "$APP_DIR/.env.local" << EOF
 # ─── AI Mode ──────────────────────────────────────────────────────────────
 NEXT_PUBLIC_DEMO_MODE=false
@@ -118,15 +119,18 @@ AWS_REGION=us-east-1
 
 # ─── Gate Login (share these with judges) ─────────────────────────────────
 GATE_USER=judge
-GATE_PASS=LessonLens2026!
+GATE_PASS=${GATE_PASS}
 GATE_TOKEN=${GATE_TOKEN}
 EOF
-    echo "  → Created .env.local (GATE_TOKEN: ${GATE_TOKEN})"
+    echo "  → Created .env.local"
+    echo "    GATE_USER=judge"
+    echo "    GATE_PASS=${GATE_PASS}"
+    echo "    GATE_TOKEN=${GATE_TOKEN}"
     echo ""
-    echo "  ╔════════════════════════════════════════════════════════╗"
-    echo "  ║  IMPORTANT: Edit .env.local to set your domain/IP    ║"
-    echo "  ║  nano /home/ec2-user/lesson-lens/.env.local          ║"
-    echo "  ╚════════════════════════════════════════════════════════╝"
+    echo "  ╔════════════════════════════════════════════════════════════════╗"
+    echo "  ║  IMPORTANT: Edit .env.local to set your domain/IP            ║"
+    echo "  ║  nano /home/ec2-user/lesson-lens/.env.local                  ║"
+    echo "  ╚════════════════════════════════════════════════════════════════╝"
 else
     echo "  → .env.local already exists, skipping (won't overwrite)"
 fi
@@ -238,9 +242,9 @@ echo ""
 echo "  Your app is running at:"
 echo "    → http://$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4 2>/dev/null || echo 'YOUR_PUBLIC_IP')"
 echo ""
-echo "  Judge login credentials:"
-echo "    → Username: judge"
-echo "    → Password: LessonLens2026!"
+echo "  Judge login credentials (from .env.local):"
+echo "    → Username: $(grep GATE_USER $APP_DIR/.env.local | cut -d= -f2)"
+echo "    → Password: $(grep GATE_PASS $APP_DIR/.env.local | cut -d= -f2)"
 echo ""
 echo "  Useful commands:"
 echo "    pm2 logs lessonlens     View app logs"
