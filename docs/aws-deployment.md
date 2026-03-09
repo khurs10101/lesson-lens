@@ -290,16 +290,18 @@ Copy the output, then create the env file:
 nano .env.local
 ```
 
-Paste this (replace `YOUR_PUBLIC_IP` and `YOUR_GATE_TOKEN`):
+Paste this (replace the placeholder values):
 
 ```env
 NEXT_PUBLIC_DEMO_MODE=false
 NEXT_PUBLIC_APP_URL=http://YOUR_PUBLIC_IP
 AWS_REGION=us-east-1
 GATE_USER=judge
-GATE_PASS=LessonLens2026!
+GATE_PASS=YOUR_SECURE_PASSWORD
 GATE_TOKEN=YOUR_GATE_TOKEN
 ```
+
+> Generate secure values: `openssl rand -base64 16` for GATE_PASS, `openssl rand -hex 16` for GATE_TOKEN.
 
 Save: `Ctrl+O` → `Enter` → `Ctrl+X`
 
@@ -438,9 +440,9 @@ http://YOUR_PUBLIC_IP
 
 You should see the LessonLens login page.
 
-Login credentials:
-- **Username:** `judge`
-- **Password:** `LessonLens2026!`
+Login credentials (the values you set in `.env.local`):
+- **Username:** your `GATE_USER` value
+- **Password:** your `GATE_PASS` value
 
 ### Verify IAM Role is working
 
