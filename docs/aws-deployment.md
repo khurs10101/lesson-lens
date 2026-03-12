@@ -240,22 +240,22 @@ sudo dnf update -y
 Updates all system packages. `dnf` is the package manager on Amazon Linux 2023 (like `apt` on Ubuntu). `-y` skips the confirmation prompt.
 
 ```bash
-curl -fsSL https://rpm.nodesource.com/setup_18.x | sudo bash -
+curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash -
 ```
 
-Downloads and runs the NodeSource setup script, which adds the Node.js 18 repository to the system. Without this, `dnf` only has an older Node version.
+Downloads and runs the NodeSource setup script, which adds the Node.js 20 repository to the system. Without this, `dnf` only has an older Node version. Node.js 20 is required because Prisma v7 needs Node.js 20.19+.
 
 ```bash
 sudo dnf install -y nodejs git
 ```
 
-Installs Node.js 18 (Next.js runtime) and Git (to clone your repo).
+Installs Node.js 20 (Next.js runtime) and Git (to clone your repo).
 
 Verify:
 
 ```bash
-node --version   # v18.x
-npm --version    # 9.x or 10.x
+node --version   # v20.x
+npm --version    # 10.x
 ```
 
 ---
