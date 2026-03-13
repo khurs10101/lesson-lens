@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /home/khurs10101/Development/Personal/lesson-lens -type f \\\\\\(-name .env* -o -name *.config.* -o -name credentials* -o -name secret* \\\\\\))",
+      "Bash(grep -r \"GATE_TOKEN\\\\|NEXTAUTH_SECRET\\\\|AWS_ACCESS_KEY\" /home/khurs10101/Development/Personal/lesson-lens/app /home/khurs10101/Development/Personal/lesson-lens/lib /home/khurs10101/Development/Personal/lesson-lens/components --include=*.ts --include=*.tsx)",
+      "Bash(grep -r STRIPE /home/khurs10101/Development/Personal/lesson-lens/lib --include=*.ts)",
+      "Bash(npm audit:*)",
+      "Bash(grep -r \"sk_\\\\|pk_\\\\|AKIA\\\\|ghp_\\\\|password.*=\" /home/khurs10101/Development/Personal/lesson-lens/app --include=*.ts --include=*.tsx)",
+      "Bash(grep -r \"password\\\\|secret\\\\|token\\\\|key\" /home/khurs10101/Development/Personal/lesson-lens/*.md)",
+      "Bash(xargs cat:*)",
+      "Bash(git ls-files:*)",
+      "WebFetch(domain:amazonnovaai.devpost.com)",
+      "Bash(grep -n \"getLesson\\\\|useEffect\\\\|useState\" /home/khurs10101/Development/Personal/lesson-lens/app/lesson/[id]/page.tsx)"
+    ]
+  }
+}

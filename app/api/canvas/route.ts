@@ -1,7 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions, IS_AUTH_ENABLED } from "@/lib/auth";
 import { generateVisualDiagram } from "@/lib/nova";
 
 export async function POST(req: NextRequest) {
+  const session = IS_AUTH_ENABLED ? await getServerSession(authOptions) : null;
+  if (IS_AUTH_ENABLED && !session) {
+    return NextResponse.json({ error: "Authentication required" }, { status: 401 });
+  }
   try {
     let body;
     try {

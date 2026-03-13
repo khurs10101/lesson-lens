@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions, IS_AUTH_ENABLED } from "@/lib/auth";
 
 const SUPPORTED_LANGUAGES = [
   "Spanish",
@@ -10,6 +12,11 @@ const SUPPORTED_LANGUAGES = [
 ];
 
 export async function POST(request: NextRequest) {
+  const session = IS_AUTH_ENABLED ? await getServerSession(authOptions) : null;
+  if (IS_AUTH_ENABLED && !session) {
+    return NextResponse.json({ error: "Authentication required" }, { status: 401 });
+  }
+
   try {
     const body = await request.json();
     const { content, targetLanguage } = body;

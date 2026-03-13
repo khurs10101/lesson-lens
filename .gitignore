@@ -38,3 +38,6 @@ next-env.d.ts
 
 # simulation / test data
 /simulation/
+
+# personal checklists
+SUBMISSION-CHECKLIST.md

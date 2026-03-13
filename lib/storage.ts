@@ -44,9 +44,25 @@ export function saveLesson(lesson: Lesson): void {
     } else {
       lessons.push(lesson);
     }
-    localStorage.setItem(LESSONS_KEY, JSON.stringify(lessons));
-  } catch {
-    console.warn("Failed to save lesson to localStorage");
+    const json = JSON.stringify(lessons);
+    try {
+      localStorage.setItem(LESSONS_KEY, json);
+    } catch {
+      // localStorage full — keep only demo + current lesson + 2 most recent
+      console.warn("[storage] localStorage full — trimming old lessons");
+      const trimmed = lessons
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+        .filter((l) => l.id === DEMO_LESSON_ID || l.id === lesson.id)
+        .concat(
+          lessons
+            .filter((l) => l.id !== DEMO_LESSON_ID && l.id !== lesson.id)
+            .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+            .slice(0, 2)
+        );
+      localStorage.setItem(LESSONS_KEY, JSON.stringify(trimmed));
+    }
+  } catch (e) {
+    console.error("[storage] Failed to save lesson:", e);
   }
 }
 

@@ -275,16 +275,28 @@ export default function UploadZone({ compact = false }: UploadZoneProps) {
 
         // Save to localStorage
         const title = uploadData.fileName.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ");
-        saveLesson({
+        const newLesson = {
           id: lessonId,
           title,
           fileName: uploadData.fileName,
           fileType: uploadData.fileType as "pdf" | "image" | "text",
           originalContent: uploadData.rawContent,
           adaptations: adaptations as never,
-          status: "ready",
+          status: "ready" as const,
           createdAt: new Date().toISOString(),
-        });
+        };
+        saveLesson(newLesson);
+
+        // Verify save succeeded — localStorage can silently fail
+        const { getLesson } = await import("@/lib/storage");
+        if (!getLesson(lessonId)) {
+          console.error("[upload] Save verification failed — lesson not found after save");
+          if (mountedRef.current) {
+            setPhase("idle");
+            alert("Storage full. Please delete old lessons from the dashboard and try again.");
+          }
+          return;
+        }
       }
 
       await new Promise((r) => setTimeout(r, 500));
