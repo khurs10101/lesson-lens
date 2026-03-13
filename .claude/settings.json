@@ -10,7 +10,8 @@
       "Bash(xargs cat:*)",
       "Bash(git ls-files:*)",
       "WebFetch(domain:amazonnovaai.devpost.com)",
-      "Bash(grep -n \"getLesson\\\\|useEffect\\\\|useState\" /home/khurs10101/Development/Personal/lesson-lens/app/lesson/[id]/page.tsx)"
+      "Bash(grep -n \"getLesson\\\\|useEffect\\\\|useState\" /home/khurs10101/Development/Personal/lesson-lens/app/lesson/[id]/page.tsx)",
+      "Bash(git rm:*)"
     ]
   }
 }
